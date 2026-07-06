@@ -1,7 +1,7 @@
 # Advanced-Form-Development-and-Validation-with-Formik-and-Yup
 
 
-# Contributers:
+# Contributors:
 
 Marc Edison Estaca <br>
 Joshua Dyck <br>
