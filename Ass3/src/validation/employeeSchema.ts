@@ -38,8 +38,5 @@ export const employeeSchema = Yup.object({
     dateOfHire: Yup.date()
         .required("Date of Hire is required")
         .max(new Date(), "Date of Hire cannot be in the future")
-        
-
-        
-
+    
 })
