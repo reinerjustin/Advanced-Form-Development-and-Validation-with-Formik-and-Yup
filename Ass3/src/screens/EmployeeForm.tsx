@@ -1,4 +1,4 @@
-import { View, Text, TextInput, Pressable } from "react-native";
+import { View, Text, TextInput, Pressable, ActivityIndicator } from "react-native";
 import { Formik } from "formik";
 import { employeeSchema } from "@/validation/employeeSchema";
 import { router } from "expo-router";
@@ -26,10 +26,23 @@ const initialValues: EmployeeFormValues = {
 };
 
 function EmployeeForm() {
-    const handleSubmit = (values: EmployeeFormValues) => {
+    const mockApi = () => {
+        return new Promise((resolve) => {
+            setTimeout(() => {
+                resolve("Success");
+            }, 2000);
+        });
+    };
+
+    const handleSubmit = async (values: EmployeeFormValues, 
+        { setSubmitting }: { setSubmitting: (isSubmitting: boolean) => void}) => {
         console.log(values);
 
+        await mockApi();
+
         alert("Employee information submitted successfully!");
+
+        setSubmitting(false);
 
         router.push("/");
     };
@@ -49,6 +62,7 @@ function EmployeeForm() {
                 handleBlur,
                 handleSubmit,
                 isValid,
+                isSubmitting,
                 resetForm
             }) => (
                 <View>
@@ -141,12 +155,16 @@ function EmployeeForm() {
                     >
                         <Text>Clear Form</Text>
                     </Pressable>
-                    
+
                     <Pressable
-                        disabled={!isValid}
+                        disabled={!isValid || isSubmitting}
                         onPress={() => handleSubmit()}
                     >
-                        <Text>Submit</Text>
+                        {isSubmitting ? (
+                            <ActivityIndicator />
+                        ) : (
+                            <Text>Submit</Text>
+                        )}
                     </Pressable>
 
                 </View>
