@@ -1,5 +1,6 @@
 import { Formik, Form, Field, ErrorMessage } from "formik";
 import { employeeSchema } from "@/validation/employeeSchema";
+import { router } from "expo-router";
 
 interface EmployeeFormValues {
     employeeId: string;
@@ -27,6 +28,8 @@ function EmployeeForm() {
     const handleSubmit = (values: EmployeeFormValues) => {
         console.log(values);
         alert("Employee information submitted successfully!");
+
+        router.push("/")
     };
 
     return (

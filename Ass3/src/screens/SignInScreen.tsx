@@ -1,12 +1,20 @@
 import { Formik, Form, Field, ErrorMessage } from "formik";
 import { signInSchema } from "@/validation/authSchema";
+import { router } from "expo-router";
 
 const initialValues = {
     email: "",
     password: "",
 };
 
-export default function SignInScreen({ navigation }: any) {
+export default function SignInScreen() {
+
+    const handleSubmit = (values: typeof initialValues) => {
+        console.log(values);
+
+        router.push("/employee");
+    };
+
     return (
         <Formik
             initialValues={initialValues}
@@ -26,7 +34,7 @@ export default function SignInScreen({ navigation }: any) {
                         Sign In
                     </button>
 
-                    <button type="button" onClick={() => navigation.navigate("SignUp")}>
+                    <button type="button" onClick={() => router.push("/signup")}>
                         Create Account
                     </button>
                 </Form>

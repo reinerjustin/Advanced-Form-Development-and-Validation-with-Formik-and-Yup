@@ -1,5 +1,6 @@
 import { Formik, Form, Field, ErrorMessage } from "formik";
 import { signUpSchema } from "@/validation/authSchema";
+import { router } from "expo-router";
 
 const initialValues = {
     fullName: "",
@@ -8,7 +9,14 @@ const initialValues = {
     confirmPassword: "",
 };
 
-export default function SignUpScreen({ navigation }: any) {
+export default function SignUpScreen() {
+
+    const handleSubmit = (values: typeof initialValues) => {
+        console.log(values);
+
+        router.push("/signin");
+    };
+
     return (
         <Formik
             initialValues={initialValues}
@@ -34,7 +42,7 @@ export default function SignUpScreen({ navigation }: any) {
                         Sign Up
                     </button>
 
-                    <button type="button" onClick={() => navigation.goBack()}>
+                    <button type="button" onClick={() => router.back()}>
                         Already have an account?
                     </button>
                 </Form>
