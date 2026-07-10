@@ -1,4 +1,4 @@
-import { View, Text, TextInput, Pressable } from "react-native";
+import { View, Text, TextInput, Pressable, ActivityIndicator } from "react-native";
 import { Formik } from "formik";
 import { router } from "expo-router";
 import { signInSchema } from "@/validation/authSchema";
@@ -11,15 +11,25 @@ const initialValues = {
 
 export default function SignInScreen() {
     const [showPassword, setShowPassword] = useState(false);
+
+    const mockApi = () => new Promise((resolve) => 
+            setTimeout(resolve, 1000));
+
     return (
         <Formik
             initialValues={initialValues}
             validationSchema={signInSchema}
             validateOnMount
-            onSubmit={(values) => {
-                console.log(values);
+            onSubmit={async (values, { setSubmitting }) => {
+                try {
+                    console.log(values);
 
-                router.push("/employee");
+                    await mockApi();
+                    
+                    router.push("/employee");
+                } finally {
+                setSubmitting(false);
+                }
             }}
         >
             {({
@@ -30,6 +40,7 @@ export default function SignInScreen() {
                 errors,
                 touched,
                 isValid,
+                isSubmitting,
                 resetForm
             }) => (
                 <View>
@@ -63,7 +74,12 @@ export default function SignInScreen() {
                         </Text>
                     </Pressable>
 
+                    {touched.password && errors.password && (
+                        <Text>{errors.password}</Text>
+                    )}
+
                     <Pressable
+                        disabled={isSubmitting}
                         onPress={() => resetForm()}
                     >
                         <Text>
@@ -72,12 +88,17 @@ export default function SignInScreen() {
                     </Pressable>
 
                     <Pressable
-                        disabled={!isValid}
+                        disabled={!isValid || isSubmitting}
                         onPress={() => handleSubmit()}
                     >
-                        <Text>
-                            Sign In
-                        </Text>
+                        {isSubmitting ? (
+                            <View>
+                                <ActivityIndicator />
+                                <Text>Signing in...</Text>
+                            </View>
+                        ) : (
+                            <Text>Sign In</Text>
+                        )}
                     </Pressable>
 
                     <Pressable
