@@ -26,25 +26,22 @@ const initialValues: EmployeeFormValues = {
 };
 
 function EmployeeForm() {
-    const mockApi = () => {
-        return new Promise((resolve) => {
-            setTimeout(() => {
-                resolve("Success");
-            }, 2000);
-        });
-    };
+    const mockApi = () => new Promise((resolve) => 
+            setTimeout(resolve, 2000));
 
     const handleSubmit = async (values: EmployeeFormValues, 
         { setSubmitting }: { setSubmitting: (isSubmitting: boolean) => void}) => {
-        console.log(values);
+        try {
+            console.log(values);
 
-        await mockApi();
+            await mockApi();
 
-        alert("Employee information submitted successfully!");
+            alert("Employee information submitted successfully!");
 
-        setSubmitting(false);
-
-        router.push("/");
+            router.push("/");
+        } finally {
+            setSubmitting(false);
+        } 
     };
 
     return (
@@ -151,6 +148,7 @@ function EmployeeForm() {
                     )}
 
                     <Pressable
+                        disabled={isSubmitting}
                         onPress={() => resetForm()}
                     >
                         <Text>Clear Form</Text>
@@ -161,7 +159,11 @@ function EmployeeForm() {
                         onPress={() => handleSubmit()}
                     >
                         {isSubmitting ? (
-                            <ActivityIndicator />
+                            <View>
+                                <ActivityIndicator />
+                                <Text>Submitting...</Text>
+                            </View>
+                            
                         ) : (
                             <Text>Submit</Text>
                         )}
