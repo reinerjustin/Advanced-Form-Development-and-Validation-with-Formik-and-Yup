@@ -25,10 +25,10 @@ const initialValues: EmployeeFormValues = {
     dateOfHire: "",
 };
 
-function EmployeeForm() {
-    const mockApi = () => new Promise((resolve) => 
-            setTimeout(resolve, 2000));
+const mockApi = () => new Promise((resolve) => 
+    setTimeout(resolve, 2000));
 
+function EmployeeForm() {
     const handleSubmit = async (values: EmployeeFormValues, 
         { setSubmitting }: { setSubmitting: (isSubmitting: boolean) => void}) => {
         try {

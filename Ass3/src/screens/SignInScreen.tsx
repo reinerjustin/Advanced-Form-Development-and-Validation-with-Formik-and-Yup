@@ -9,11 +9,11 @@ const initialValues = {
     password: "",
 };
 
+const mockApi = () => new Promise((resolve) => 
+    setTimeout(resolve, 1000));
+
 export default function SignInScreen() {
     const [showPassword, setShowPassword] = useState(false);
-
-    const mockApi = () => new Promise((resolve) => 
-            setTimeout(resolve, 1000));
 
     return (
         <Formik
@@ -105,7 +105,7 @@ export default function SignInScreen() {
                         onPress={() => router.push("/signup")}
                     >
                         <Text>
-                            Create Account
+                            Don't have an account? Register.
                         </Text>
                     </Pressable>
 

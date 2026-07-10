@@ -1,4 +1,4 @@
-import { View, Text, TextInput, Pressable } from "react-native";
+import { View, Text, TextInput, Pressable, ActivityIndicator } from "react-native";
 import { Formik } from "formik";
 import { signUpSchema } from "@/validation/authSchema";
 import { router } from "expo-router";
@@ -11,12 +11,23 @@ const initialValues = {
     confirmPassword: "",
 };
 
+const mockApi = () => new Promise((resolve) =>
+    setTimeout(resolve, 2000));
+
 export default function SignUpScreen() {
 
-    const handleSubmit = (values: typeof initialValues) => {
-        console.log(values);
+    const handleSubmit = async (values: typeof initialValues,
+        { setSubmitting } : { setSubmitting: (isSubmitting: boolean) => void }
+    ) => {
+        try {
+            console.log(values);
 
-        router.push("/signin");
+            await mockApi();
+
+            router.push("/signin");
+        } finally {
+            setSubmitting(false);
+        }
     };
 
     const [showPassword, setShowPassword] = useState(false);
@@ -37,6 +48,7 @@ export default function SignUpScreen() {
                 handleBlur,
                 handleSubmit,
                 isValid,
+                isSubmitting,
                 resetForm
             }) => (
                 <View>
@@ -78,6 +90,10 @@ export default function SignUpScreen() {
                         </Text>
                     </Pressable>
 
+                    {touched.password && errors.password && (
+                        <Text>{errors.password}</Text>
+                    )}
+
                     <Text>Confirm Password</Text>
                     <TextInput
                         value={values.confirmPassword}
@@ -92,7 +108,12 @@ export default function SignUpScreen() {
                         </Text>
                     </Pressable>
 
+                    {touched.confirmPassword && errors.confirmPassword && (
+                        <Text>{errors.confirmPassword}</Text>
+                    )}
+
                     <Pressable
+                        disabled={isSubmitting}
                         onPress={() => resetForm()}
                     >
                         <Text>
@@ -101,17 +122,24 @@ export default function SignUpScreen() {
                     </Pressable>
 
                     <Pressable
-                        disabled={!isValid}
+                        disabled={!isValid || isSubmitting}
                         onPress={() => handleSubmit()}
                     >
-                        <Text>Sign Up</Text>
+                        {isSubmitting ? (
+                            <View>
+                                <ActivityIndicator />
+                                <Text>Signing up...</Text>
+                            </View>
+                        ) : (
+                            <Text>Sign Up</Text>
+                        )}
                     </Pressable>
 
                     <Pressable
                         onPress={() => router.back()}
                     >
                         <Text>
-                            Already have an account?
+                            Already have an account? Sign in.
                         </Text>
                     </Pressable>
 
