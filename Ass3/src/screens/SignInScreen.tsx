@@ -20,6 +20,8 @@ export default function SignInScreen() {
             initialValues={initialValues}
             validationSchema={signInSchema}
             validateOnMount
+            validateOnChange
+            validateOnBlur
             onSubmit={async (values, { setSubmitting }) => {
                 try {
                     console.log(values);

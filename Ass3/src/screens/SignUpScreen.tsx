@@ -38,6 +38,8 @@ export default function SignUpScreen() {
             initialValues={initialValues}
             validationSchema={signUpSchema}
             validateOnMount
+            validateOnChange
+            validateOnBlur
             onSubmit={handleSubmit}
         >
             {({

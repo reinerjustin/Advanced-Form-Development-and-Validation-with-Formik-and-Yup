@@ -50,7 +50,9 @@ function EmployeeForm() {
             validationSchema={employeeSchema}
             onSubmit={handleSubmit}
             validateOnMount
-        >
+            validateOnChange
+            validateOnBlur
+            >
             {({
                 values,
                 errors,
