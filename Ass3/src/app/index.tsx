@@ -13,11 +13,7 @@ export default function Index() {
         title="Sign Up"
         onPress={() => router.push("/signup")}
       />
-
-      <Button
-        title="Employee Form"
-        onPress={() => router.push("/employee")}
-      />
+      
     </View>
   );
 }
