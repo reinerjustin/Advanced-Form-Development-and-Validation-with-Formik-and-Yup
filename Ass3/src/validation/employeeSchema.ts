@@ -3,7 +3,7 @@ import * as Yup from "yup";
 export const employeeSchema = Yup.object({
     employeeId: Yup.string()
         .required("Employee ID is required")
-        .matches(/^\d{6,9}$/, "Employee ID must contain only numbers with or without the three leading zeroes"),
+        .matches(/^(000)?\d{6}$/, "Employee ID must be 6 digits or start with 000 followed by 6 digits."),
 
     fullName: Yup.string()
         .required("Full Name is required")
