@@ -30,6 +30,7 @@ export default function SignInScreen() {
                 errors,
                 touched,
                 isValid,
+                resetForm
             }) => (
                 <View>
 
@@ -59,6 +60,14 @@ export default function SignInScreen() {
                     >
                         <Text>
                             {showPassword ? "Hide" : "Show"}
+                        </Text>
+                    </Pressable>
+
+                    <Pressable
+                        onPress={() => resetForm()}
+                    >
+                        <Text>
+                            Reset
                         </Text>
                     </Pressable>
 

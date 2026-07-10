@@ -37,6 +37,7 @@ export default function SignUpScreen() {
                 handleBlur,
                 handleSubmit,
                 isValid,
+                resetForm
             }) => (
                 <View>
 
@@ -88,6 +89,14 @@ export default function SignUpScreen() {
                     <Pressable onPress={() => setShowConfirmPassword(!showConfirmPassword)}>
                         <Text>
                             {showConfirmPassword ? "Hide" : "Show"}
+                        </Text>
+                    </Pressable>
+
+                    <Pressable
+                        onPress={() => resetForm()}
+                    >
+                        <Text>
+                            Clear Form
                         </Text>
                     </Pressable>
 

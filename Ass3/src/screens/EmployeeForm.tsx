@@ -49,6 +49,7 @@ function EmployeeForm() {
                 handleBlur,
                 handleSubmit,
                 isValid,
+                resetForm
             }) => (
                 <View>
 
@@ -135,6 +136,12 @@ function EmployeeForm() {
                         <Text>{errors.dateOfHire}</Text>
                     )}
 
+                    <Pressable
+                        onPress={() => resetForm()}
+                    >
+                        <Text>Clear Form</Text>
+                    </Pressable>
+                    
                     <Pressable
                         disabled={!isValid}
                         onPress={() => handleSubmit()}
