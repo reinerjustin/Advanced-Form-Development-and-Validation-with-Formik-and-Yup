@@ -27,9 +27,9 @@ export const employeeSchema = Yup.object({
 
     positionTitle: Yup.string()
         .required("Position Title is required")
-        .min(10, "Minimum of 10 characters")
+        .min(5, "Minimum of 5 characters")
         .max(20, "Maximum of 20 characters")
-        .matches(/^[A-Za-z ]+$/, "Letters only"),
+        .matches(/^[A-Za-z ]+$/, "Only letters and spaces are allowed"),
 
     department: Yup.string()
         .required("Department is required")

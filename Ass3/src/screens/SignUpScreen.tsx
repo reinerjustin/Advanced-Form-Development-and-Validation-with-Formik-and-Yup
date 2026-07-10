@@ -1,4 +1,5 @@
-import { Formik, Form, Field, ErrorMessage } from "formik";
+import { View, Text, TextInput, Pressable } from "react-native";
+import { Formik } from "formik";
 import { signUpSchema } from "@/validation/authSchema";
 import { router } from "expo-router";
 
@@ -22,30 +23,82 @@ export default function SignUpScreen() {
             initialValues={initialValues}
             validationSchema={signUpSchema}
             validateOnMount
-            onSubmit={(values) => console.log(values)}
+            onSubmit={handleSubmit}
         >
-            {({ isValid }) => (
-                <Form>
-                    <Field name="fullName" />
-                    <ErrorMessage name="fullName" component="div" />
+            {({
+                values,
+                errors,
+                touched,
+                handleChange,
+                handleBlur,
+                handleSubmit,
+                isValid,
+            }) => (
+                <View>
 
-                    <Field name="email" type="email" />
-                    <ErrorMessage name="email" component="div" />
+                    <Text>Full Name</Text>
+                    <TextInput
+                        value={values.fullName}
+                        onChangeText={handleChange("fullName")}
+                        onBlur={handleBlur("fullName")}
+                    />
 
-                    <Field name="password" type="password" />
-                    <ErrorMessage name="password" component="div" />
+                    {touched.fullName && errors.fullName && (
+                        <Text>{errors.fullName}</Text>
+                    )}
 
-                    <Field name="confirmPassword" type="password" />
-                    <ErrorMessage name="confirmPassword" component="div" />
+                    <Text>Email</Text>
+                    <TextInput
+                        value={values.email}
+                        onChangeText={handleChange("email")}
+                        onBlur={handleBlur("email")}
+                        keyboardType="email-address"
+                    />
 
-                    <button type = "submit" disabled={!isValid}>
-                        Sign Up
-                    </button>
+                    {touched.email && errors.email && (
+                        <Text>{errors.email}</Text>
+                    )}
 
-                    <button type="button" onClick={() => router.back()}>
-                        Already have an account?
-                    </button>
-                </Form>
+                    <Text>Password</Text>
+                    <TextInput
+                        value={values.password}
+                        onChangeText={handleChange("password")}
+                        onBlur={handleBlur("password")}
+                        secureTextEntry
+                    />
+
+                    {touched.password && errors.password && (
+                        <Text>{errors.password}</Text>
+                    )}
+
+                    <Text>Confirm Password</Text>
+                    <TextInput
+                        value={values.confirmPassword}
+                        onChangeText={handleChange("confirmPassword")}
+                        onBlur={handleBlur("confirmPassword")}
+                        secureTextEntry
+                    />
+
+                    {touched.confirmPassword && errors.confirmPassword && (
+                        <Text>{errors.confirmPassword}</Text>
+                    )}
+
+                    <Pressable
+                        disabled={!isValid}
+                        onPress={() => handleSubmit()}
+                    >
+                        <Text>Sign Up</Text>
+                    </Pressable>
+
+                    <Pressable
+                        onPress={() => router.back()}
+                    >
+                        <Text>
+                            Already have an account?
+                        </Text>
+                    </Pressable>
+
+                </View>
             )}
         </Formik>
     );

@@ -1,6 +1,7 @@
-import { Formik, Form, Field, ErrorMessage } from "formik";
-import { signInSchema } from "@/validation/authSchema";
+import { View, Text, TextInput, Pressable } from "react-native";
+import { Formik } from "formik";
 import { router } from "expo-router";
+import { signInSchema } from "@/validation/authSchema";
 
 const initialValues = {
     email: "",
@@ -8,36 +9,71 @@ const initialValues = {
 };
 
 export default function SignInScreen() {
-
-    const handleSubmit = (values: typeof initialValues) => {
-        console.log(values);
-
-        router.push("/employee");
-    };
-
     return (
         <Formik
             initialValues={initialValues}
             validationSchema={signInSchema}
             validateOnMount
-            onSubmit={(values) => console.log(values)}
+            onSubmit={(values) => {
+                console.log(values);
+
+                router.push("/employee");
+            }}
         >
-            {({ isValid }) => (
-                <Form>
-                    <Field name="email" type="email" />
-                    <ErrorMessage name="email" component="div" />
+            {({
+                handleChange,
+                handleBlur,
+                handleSubmit,
+                values,
+                errors,
+                touched,
+                isValid,
+            }) => (
+                <View>
 
-                    <Field name="password" type="password" />
-                    <ErrorMessage name="password" component="div" />
+                    <Text>Email</Text>
+                    <TextInput
+                        value={values.email}
+                        onChangeText={handleChange("email")}
+                        onBlur={handleBlur("email")}
+                        keyboardType="email-address"
+                    />
 
-                    <button type="submit" disabled={!isValid}>
-                        Sign In
-                    </button>
+                    {touched.email && errors.email && (
+                        <Text>{errors.email}</Text>
+                    )}
 
-                    <button type="button" onClick={() => router.push("/signup")}>
-                        Create Account
-                    </button>
-                </Form>
+
+                    <Text>Password</Text>
+                    <TextInput
+                        value={values.password}
+                        onChangeText={handleChange("password")}
+                        onBlur={handleBlur("password")}
+                        secureTextEntry
+                    />
+
+                    {touched.password && errors.password && (
+                        <Text>{errors.password}</Text>
+                    )}
+
+                    <Pressable
+                        disabled={!isValid}
+                        onPress={() => handleSubmit()}
+                    >
+                        <Text>
+                            Sign In
+                        </Text>
+                    </Pressable>
+
+                    <Pressable
+                        onPress={() => router.push("/signup")}
+                    >
+                        <Text>
+                            Create Account
+                        </Text>
+                    </Pressable>
+
+                </View>
             )}
         </Formik>
     );

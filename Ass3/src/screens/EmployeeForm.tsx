@@ -1,4 +1,5 @@
-import { Formik, Form, Field, ErrorMessage } from "formik";
+import { View, Text, TextInput, Pressable } from "react-native";
+import { Formik } from "formik";
 import { employeeSchema } from "@/validation/employeeSchema";
 import { router } from "expo-router";
 
@@ -11,8 +12,8 @@ interface EmployeeFormValues {
     positionTitle: string;
     department: string;
     dateOfHire: string;
-
 }
+
 const initialValues: EmployeeFormValues = {
     employeeId: "",
     fullName: "",
@@ -27,73 +28,121 @@ const initialValues: EmployeeFormValues = {
 function EmployeeForm() {
     const handleSubmit = (values: EmployeeFormValues) => {
         console.log(values);
+
         alert("Employee information submitted successfully!");
 
-        router.push("/")
+        router.push("/");
     };
 
     return (
         <Formik<EmployeeFormValues>
-        initialValues={initialValues}
-        validationSchema={employeeSchema}
-        onSubmit={handleSubmit}
-        validateOnMount
+            initialValues={initialValues}
+            validationSchema={employeeSchema}
+            onSubmit={handleSubmit}
+            validateOnMount
         >
-            {({ isValid }) => (
-                <Form>
+            {({
+                values,
+                errors,
+                touched,
+                handleChange,
+                handleBlur,
+                handleSubmit,
+                isValid,
+            }) => (
+                <View>
 
-                    <div>
-                        <label htmlFor="employeeId">Employee ID</label>
-                        <Field id="employeeId" name="employeeId" type="text" />
-                        <ErrorMessage name="employeeId" component="div" className="error" />
-                    </div>
+                    <Text>Employee ID</Text>
+                    <TextInput
+                        value={values.employeeId}
+                        onChangeText={handleChange("employeeId")}
+                        onBlur={handleBlur("employeeId")}
+                    />
+                    {touched.employeeId && errors.employeeId && (
+                        <Text>{errors.employeeId}</Text>
+                    )}
 
-                    <div>
-                        <label htmlFor="fullName">Full Name</label>
-                        <Field id="fullName" name="fullName" type="text" />
-                        <ErrorMessage name="fullName" component="div" className="error" />
-                    </div>
+                    <Text>Full Name</Text>
+                    <TextInput
+                        value={values.fullName}
+                        onChangeText={handleChange("fullName")}
+                        onBlur={handleBlur("fullName")}
+                    />
+                    {touched.fullName && errors.fullName && (
+                        <Text>{errors.fullName}</Text>
+                    )}
 
-                    <div>
-                        <label htmlFor="address">Address</label>
-                        <Field id="address" name="address" type="text" />
-                        <ErrorMessage name="address" component="div" className="error" />
-                    </div>
+                    <Text>Address</Text>
+                    <TextInput
+                        value={values.address}
+                        onChangeText={handleChange("address")}
+                        onBlur={handleBlur("address")}
+                    />
+                    {touched.address && errors.address && (
+                        <Text>{errors.address}</Text>
+                    )}
 
-                    <div>
-                        <label htmlFor="email">Email</label>
-                        <Field id="email" name="email" type="email" />
-                        <ErrorMessage name="email" component="div" className="error" />
-                    </div>
+                    <Text>Email</Text>
+                    <TextInput
+                        value={values.email}
+                        onChangeText={handleChange("email")}
+                        onBlur={handleBlur("email")}
+                        keyboardType="email-address"
+                    />
+                    {touched.email && errors.email && (
+                        <Text>{errors.email}</Text>
+                    )}
 
-                    <div>
-                        <label htmlFor="phone">Phone</label>
-                        <Field id="phone" name="phone" type="text" />
-                        <ErrorMessage name="phone" component="div" className="error" />
-                    </div>
+                    <Text>Phone</Text>
+                    <TextInput
+                        value={values.phone}
+                        onChangeText={handleChange("phone")}
+                        onBlur={handleBlur("phone")}
+                        keyboardType="phone-pad"
+                    />
+                    {touched.phone && errors.phone && (
+                        <Text>{errors.phone}</Text>
+                    )}
 
-                    <div>
-                        <label htmlFor="positionTitle">Position Title</label>
-                        <Field id="positionTitle" name="positionTitle" type="text" />
-                        <ErrorMessage name="positionTitle" component="div" className="error" />
-                    </div>
+                    <Text>Position Title</Text>
+                    <TextInput
+                        value={values.positionTitle}
+                        onChangeText={handleChange("positionTitle")}
+                        onBlur={handleBlur("positionTitle")}
+                    />
+                    {touched.positionTitle && errors.positionTitle && (
+                        <Text>{errors.positionTitle}</Text>
+                    )}
 
-                    <div>
-                        <label htmlFor="department">Department</label>
-                        <Field id="department" name="department" type="text" />
-                        <ErrorMessage name="department" component="div" className="error" />
-                    </div>
+                    <Text>Department</Text>
+                    <TextInput
+                        value={values.department}
+                        onChangeText={handleChange("department")}
+                        onBlur={handleBlur("department")}
+                    />
+                    {touched.department && errors.department && (
+                        <Text>{errors.department}</Text>
+                    )}
 
-                    <div>
-                        <label htmlFor="dateOfHire">Date of Hire</label>
-                        <Field id="dateOfHire" name="dateOfHire" type="date" />
-                        <ErrorMessage name="dateOfHire" component="div" className="error" />
-                    </div>
-                    
-                    <button type="submit" disabled={!isValid}>
-                        Submit
-                    </button>
-                </Form>
+                    <Text>Date of Hire</Text>
+                    <TextInput
+                        value={values.dateOfHire}
+                        onChangeText={handleChange("dateOfHire")}
+                        onBlur={handleBlur("dateOfHire")}
+                        placeholder="YYYY-MM-DD"
+                    />
+                    {touched.dateOfHire && errors.dateOfHire && (
+                        <Text>{errors.dateOfHire}</Text>
+                    )}
+
+                    <Pressable
+                        disabled={!isValid}
+                        onPress={() => handleSubmit()}
+                    >
+                        <Text>Submit</Text>
+                    </Pressable>
+
+                </View>
             )}
         </Formik>
     );
