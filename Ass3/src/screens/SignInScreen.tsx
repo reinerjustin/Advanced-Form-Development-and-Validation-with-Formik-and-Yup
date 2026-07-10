@@ -2,6 +2,7 @@ import { View, Text, TextInput, Pressable } from "react-native";
 import { Formik } from "formik";
 import { router } from "expo-router";
 import { signInSchema } from "@/validation/authSchema";
+import { useState } from "react";
 
 const initialValues = {
     email: "",
@@ -9,6 +10,7 @@ const initialValues = {
 };
 
 export default function SignInScreen() {
+    const [showPassword, setShowPassword] = useState(false);
     return (
         <Formik
             initialValues={initialValues}
@@ -49,12 +51,16 @@ export default function SignInScreen() {
                         value={values.password}
                         onChangeText={handleChange("password")}
                         onBlur={handleBlur("password")}
-                        secureTextEntry
+                        secureTextEntry={!showPassword}
                     />
 
-                    {touched.password && errors.password && (
-                        <Text>{errors.password}</Text>
-                    )}
+                    <Pressable  
+                        onPress={() => setShowPassword(!showPassword)}
+                    >
+                        <Text>
+                            {showPassword ? "Hide" : "Show"}
+                        </Text>
+                    </Pressable>
 
                     <Pressable
                         disabled={!isValid}
