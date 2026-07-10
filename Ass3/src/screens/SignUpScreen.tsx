@@ -2,6 +2,7 @@ import { View, Text, TextInput, Pressable } from "react-native";
 import { Formik } from "formik";
 import { signUpSchema } from "@/validation/authSchema";
 import { router } from "expo-router";
+import { useState } from "react";
 
 const initialValues = {
     fullName: "",
@@ -17,6 +18,9 @@ export default function SignUpScreen() {
 
         router.push("/signin");
     };
+
+    const [showPassword, setShowPassword] = useState(false);
+    const [showConfirmPassword, setShowConfirmPassword] = useState(false);
 
     return (
         <Formik
@@ -64,24 +68,28 @@ export default function SignUpScreen() {
                         value={values.password}
                         onChangeText={handleChange("password")}
                         onBlur={handleBlur("password")}
-                        secureTextEntry
+                        secureTextEntry={!showPassword}
                     />
 
-                    {touched.password && errors.password && (
-                        <Text>{errors.password}</Text>
-                    )}
+                    <Pressable onPress={() => setShowPassword(!showPassword)}>
+                        <Text>
+                            {showPassword ? "Hide" : "Show"}
+                        </Text>
+                    </Pressable>
 
                     <Text>Confirm Password</Text>
                     <TextInput
                         value={values.confirmPassword}
                         onChangeText={handleChange("confirmPassword")}
                         onBlur={handleBlur("confirmPassword")}
-                        secureTextEntry
+                        secureTextEntry={!showConfirmPassword}
                     />
 
-                    {touched.confirmPassword && errors.confirmPassword && (
-                        <Text>{errors.confirmPassword}</Text>
-                    )}
+                    <Pressable onPress={() => setShowConfirmPassword(!showConfirmPassword)}>
+                        <Text>
+                            {showConfirmPassword ? "Hide" : "Show"}
+                        </Text>
+                    </Pressable>
 
                     <Pressable
                         disabled={!isValid}
