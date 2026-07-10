@@ -7,9 +7,9 @@ export const employeeSchema = Yup.object({
 
     fullName: Yup.string()
         .required("Full Name is required")
-        .min(20, "Minimum of 20 characters")
+        .min(3, "Minimum of 3 characters")
         .max(50, "Maximum of 50 characters")
-        .matches(/^[A-Za-z ]+$/, "Letters only"),
+        .matches(/^[A-Za-z ]+$/, "Only letters and spaces are allowed"),
 
     address: Yup.string()
         .required("Address is required")
