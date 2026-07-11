@@ -1,6 +1,6 @@
 import { StyleSheet } from "react-native";
 
-const main = StyleSheet.create({
+export const main = StyleSheet.create({
     alignment: {
         flex: 1,
         backgroundColor: "#f5f7fa",
