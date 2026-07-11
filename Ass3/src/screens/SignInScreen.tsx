@@ -19,7 +19,7 @@ export default function SignInScreen() {
     return (
         <View style={styles.alignment}>
             <View style={styles.card}>
-                <Text style={styles.title}>Login</Text>
+                <Text style={styles.title}>Sign In</Text>
                 <Formik
                     initialValues={initialValues}
                     validationSchema={signInSchema}
