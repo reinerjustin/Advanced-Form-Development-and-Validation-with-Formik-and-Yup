@@ -149,7 +149,7 @@ export default function SignUpScreen() {
                                     {isSubmitting ? (
                                         <View style={styles.loadingRow}>
                                             <ActivityIndicator />
-                                            <Text>Signing up...</Text>
+                                            <Text style={styles.loadingText}>Signing up...</Text>
                                         </View>
                                     ) : (
                                         <Text style={styles.loadingText}>Sign Up</Text>

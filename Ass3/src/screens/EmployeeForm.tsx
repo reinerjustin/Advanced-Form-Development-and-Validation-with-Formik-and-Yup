@@ -1,7 +1,8 @@
-import { View, Text, TextInput, Pressable, ActivityIndicator } from "react-native";
+import { View, Text, TextInput, Pressable, ActivityIndicator, ScrollView } from "react-native";
 import { Formik } from "formik";
 import { employeeSchema } from "@/validation/employeeSchema";
 import { router } from "expo-router";
+import { styles } from "@/style/Shared";
 
 interface EmployeeFormValues {
     employeeId: string;
@@ -45,135 +46,154 @@ function EmployeeForm() {
     };
 
     return (
-        <Formik<EmployeeFormValues>
-            initialValues={initialValues}
-            validationSchema={employeeSchema}
-            onSubmit={handleSubmit}
-            validateOnMount
-            validateOnChange
-            validateOnBlur
-            >
-            {({
-                values,
-                errors,
-                touched,
-                handleChange,
-                handleBlur,
-                handleSubmit,
-                isValid,
-                isSubmitting,
-                resetForm
-            }) => (
-                <View>
+        <View style={styles.alignment}>
+            <View style={styles.card}>
+                <ScrollView>
+                    <Text style={styles.title}>Employee Information</Text>
+                    <Formik<EmployeeFormValues>
+                        initialValues={initialValues}
+                        validationSchema={employeeSchema}
+                        onSubmit={handleSubmit}
+                        validateOnMount
+                        validateOnChange
+                        validateOnBlur
+                        >
+                        {({
+                            values,
+                            errors,
+                            touched,
+                            handleChange,
+                            handleBlur,
+                            handleSubmit,
+                            isValid,
+                            isSubmitting,
+                            resetForm
+                        }) => (
+                        <View>
+                            <Text style={styles.label}>Employee ID</Text>
+                            <TextInput
+                                style={styles.input}
+                                value={values.employeeId}
+                                onChangeText={handleChange("employeeId")}
+                                onBlur={handleBlur("employeeId")}
+                            />
+                            {touched.employeeId && errors.employeeId && (
+                                <Text style={styles.error}>{errors.employeeId}</Text>
+                            )}
 
-                    <Text>Employee ID</Text>
-                    <TextInput
-                        value={values.employeeId}
-                        onChangeText={handleChange("employeeId")}
-                        onBlur={handleBlur("employeeId")}
-                    />
-                    {touched.employeeId && errors.employeeId && (
-                        <Text>{errors.employeeId}</Text>
+                            <Text style={styles.label}>Full Name</Text>
+                            <TextInput
+                                style={styles.input}
+                                value={values.fullName}
+                                onChangeText={handleChange("fullName")}
+                                onBlur={handleBlur("fullName")}
+                            />
+                            {touched.fullName && errors.fullName && (
+                                <Text style={styles.error}>{errors.fullName}</Text>
+                            )}
+
+                            <Text style={styles.label}>Address</Text>
+                            <TextInput
+                                style={styles.input}
+                                value={values.address}
+                                onChangeText={handleChange("address")}
+                                onBlur={handleBlur("address")}
+                            />
+                            {touched.address && errors.address && (
+                                <Text style={styles.error}>{errors.address}</Text>
+                            )}
+
+                            <Text style={styles.label}>Email</Text>
+                            <TextInput
+                                style={styles.input}
+                                value={values.email}
+                                onChangeText={handleChange("email")}
+                                onBlur={handleBlur("email")}
+                                keyboardType="email-address"
+                            />
+                            {touched.email && errors.email && (
+                                <Text style={styles.error}>{errors.email}</Text>
+                            )}
+
+                            <Text style={styles.label}>Phone</Text>
+                            <TextInput
+                                style={styles.input}
+                                value={values.phone}
+                                onChangeText={handleChange("phone")}
+                                onBlur={handleBlur("phone")}
+                                keyboardType="phone-pad"
+                            />
+                            {touched.phone && errors.phone && (
+                                <Text style={styles.error}>{errors.phone}</Text>
+                            )}
+
+                            <Text style={styles.label}>Position Title</Text>
+                            <TextInput
+                                style={styles.input}
+                                value={values.positionTitle}
+                                onChangeText={handleChange("positionTitle")}
+                                onBlur={handleBlur("positionTitle")}
+                            />
+                            {touched.positionTitle && errors.positionTitle && (
+                                <Text style={styles.error}>{errors.positionTitle}</Text>
+                            )}
+
+                            <Text style={styles.label}>Department</Text>
+                            <TextInput
+                                style={styles.input}
+                                value={values.department}
+                                onChangeText={handleChange("department")}
+                                onBlur={handleBlur("department")}
+                            />
+                            {touched.department && errors.department && (
+                                <Text style={styles.error}>{errors.department}</Text>
+                            )}
+
+                            <Text style={styles.label}>Date of Hire</Text>
+                            <TextInput
+                                style={styles.input}
+                                value={values.dateOfHire}
+                                onChangeText={handleChange("dateOfHire")}
+                                onBlur={handleBlur("dateOfHire")}
+                                placeholder="YYYY-MM-DD"
+                            />
+                            {touched.dateOfHire && errors.dateOfHire && (
+                                <Text style={styles.error}>{errors.dateOfHire}</Text>
+                            )}
+
+                            <Pressable
+                                style={styles.secondaryButton}
+                                disabled={isSubmitting}
+                                onPress={() => resetForm()}
+                            >
+                                <Text style={styles.secondaryButtonText}>Clear Form</Text>
+                            </Pressable>
+
+                            <Pressable
+                                style={[
+                                    styles.primaryButton,
+                                    (!isValid || isSubmitting) &&
+                                        styles.primaryButtonDisabled,
+                                ]}
+                                disabled={!isValid || isSubmitting}
+                                onPress={() => handleSubmit()}
+                            >
+                                {isSubmitting ? (
+                                    <View style={styles.loadingRow}>
+                                        <ActivityIndicator />
+                                        <Text style={styles.loadingText}>Submitting...</Text>
+                                    </View>
+                                    
+                                ) : (
+                                    <Text style={styles.loadingText}>Submit</Text>
+                                )}
+                            </Pressable>
+                        </View>
                     )}
-
-                    <Text>Full Name</Text>
-                    <TextInput
-                        value={values.fullName}
-                        onChangeText={handleChange("fullName")}
-                        onBlur={handleBlur("fullName")}
-                    />
-                    {touched.fullName && errors.fullName && (
-                        <Text>{errors.fullName}</Text>
-                    )}
-
-                    <Text>Address</Text>
-                    <TextInput
-                        value={values.address}
-                        onChangeText={handleChange("address")}
-                        onBlur={handleBlur("address")}
-                    />
-                    {touched.address && errors.address && (
-                        <Text>{errors.address}</Text>
-                    )}
-
-                    <Text>Email</Text>
-                    <TextInput
-                        value={values.email}
-                        onChangeText={handleChange("email")}
-                        onBlur={handleBlur("email")}
-                        keyboardType="email-address"
-                    />
-                    {touched.email && errors.email && (
-                        <Text>{errors.email}</Text>
-                    )}
-
-                    <Text>Phone</Text>
-                    <TextInput
-                        value={values.phone}
-                        onChangeText={handleChange("phone")}
-                        onBlur={handleBlur("phone")}
-                        keyboardType="phone-pad"
-                    />
-                    {touched.phone && errors.phone && (
-                        <Text>{errors.phone}</Text>
-                    )}
-
-                    <Text>Position Title</Text>
-                    <TextInput
-                        value={values.positionTitle}
-                        onChangeText={handleChange("positionTitle")}
-                        onBlur={handleBlur("positionTitle")}
-                    />
-                    {touched.positionTitle && errors.positionTitle && (
-                        <Text>{errors.positionTitle}</Text>
-                    )}
-
-                    <Text>Department</Text>
-                    <TextInput
-                        value={values.department}
-                        onChangeText={handleChange("department")}
-                        onBlur={handleBlur("department")}
-                    />
-                    {touched.department && errors.department && (
-                        <Text>{errors.department}</Text>
-                    )}
-
-                    <Text>Date of Hire</Text>
-                    <TextInput
-                        value={values.dateOfHire}
-                        onChangeText={handleChange("dateOfHire")}
-                        onBlur={handleBlur("dateOfHire")}
-                        placeholder="YYYY-MM-DD"
-                    />
-                    {touched.dateOfHire && errors.dateOfHire && (
-                        <Text>{errors.dateOfHire}</Text>
-                    )}
-
-                    <Pressable
-                        disabled={isSubmitting}
-                        onPress={() => resetForm()}
-                    >
-                        <Text>Clear Form</Text>
-                    </Pressable>
-
-                    <Pressable
-                        disabled={!isValid || isSubmitting}
-                        onPress={() => handleSubmit()}
-                    >
-                        {isSubmitting ? (
-                            <View>
-                                <ActivityIndicator />
-                                <Text>Submitting...</Text>
-                            </View>
-                            
-                        ) : (
-                            <Text>Submit</Text>
-                        )}
-                    </Pressable>
-
-                </View>
-            )}
-        </Formik>
+                    </Formik>
+                </ScrollView>
+            </View>
+        </View>   
     );
 }
 

@@ -108,7 +108,7 @@ export default function SignInScreen() {
                                 {isSubmitting ? (
                                     <View style={styles.loadingRow}>
                                         <ActivityIndicator />
-                                        <Text>Signing in...</Text>
+                                        <Text style={styles.loadingText}>Signing in...</Text>
                                     </View>
                                 ) : (
                                     <Text style={styles.loadingText}>Sign In</Text>
