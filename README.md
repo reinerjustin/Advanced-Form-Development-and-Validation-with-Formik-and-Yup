@@ -16,8 +16,6 @@ npm install
 npx expo start
 ```
 
-## Sample Output
-![alt text](https://github.com/reinerjustin/Advanced-Form-Development-and-Validation-with-Formik-and-Yup/blob/main/Ass3/assets/images/ass3_output.png)
 
 ## Assignment Overview 
 
@@ -31,3 +29,6 @@ Upon successful completion of this assignment, students will be able to:
 • Design professional and user-friendly form interfaces 
 • Implement authentication-style forms following industry standards 
 • Collaborate effectively using GitHub version control 
+
+## Sample Output
+![alt text](https://github.com/reinerjustin/Advanced-Form-Development-and-Validation-with-Formik-and-Yup/blob/main/Ass3/assets/images/ass3_output.png)
